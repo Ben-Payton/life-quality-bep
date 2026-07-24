@@ -13,7 +13,7 @@ dependencies = [
 ]
 
 [project.scripts]
-pychkq = "life_quality:check_queue.chkq"
+chkq = "life_quality:check_queue.chkq"
 
 [build-system]
 requires = ["uv_build>=0.11.20,<0.12.0"]
