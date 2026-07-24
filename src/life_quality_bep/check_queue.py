@@ -5,12 +5,14 @@ from .lq_utilities import on_wendian, ssh_modify_command, get_wendian_username
 
 
 def get_queue_vals() -> str:
-    command = ["squeue", '--format="%.18i %.9P %.30j %.30u %.8t %.10M %.9l %.6D %R"']
+    command = ["squeue", '--format="%.18i %.30u %.8t"']
     if not on_wendian():
         command = ssh_modify_command(command)
     data = subprocess.run(command, capture_output=True, text=True, encoding="utf-8")
     my_data = data.stdout
-    return my_data
+    if on_wendian():
+        my_data = "\n".join([i.strip("\"") for i in my_data.split("\n")])
+    return my_data.strip()
 
 
 def count_queue_lines(data) -> int:
@@ -18,11 +20,14 @@ def count_queue_lines(data) -> int:
 
 
 def collect_queue_names(data) -> int:
-    return np.array([i.split()[3] for i in data])
+    name_index = 1
+
+    return np.array([i.strip().split()[name_index] for i in data])
 
 
 def collect_queue_running(data) -> int:
-    return np.array([i.split()[4] == "R" for i in data])
+    status_index = 2
+    return np.array([i.strip().split()[status_index] == "R" for i in data])
 
 
 def chkq():

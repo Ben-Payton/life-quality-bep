@@ -1,6 +1,6 @@
 [project]
 name = "life-quality-bep"
-version = "0.1.0"
+version = "0.5.4"
 description = "Add your description here"
 readme = "README.md"
 authors = [
@@ -13,7 +13,7 @@ dependencies = [
 ]
 
 [project.scripts]
-chkq = "life_quality:check_queue.chkq"
+chkq = "life_quality_bep:check_queue.chkq"
 
 [build-system]
 requires = ["uv_build>=0.11.20,<0.12.0"]
